@@ -1,0 +1,5 @@
+.DS_Store
+node_modules
+pg-admin/data
+pg-admin/dumps
+mongo-express/mongo-data
