@@ -1,0 +1,46 @@
+services:
+  app:
+    image: express-app-2
+    container_name: express-app-server
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/mydatabase
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - postgres
+      - redis
+      - pgadmin
+
+
+  # PostgreSQL container
+  postgres: 
+    image: postgres
+    container_name: postgres-1
+    environment: 
+      - POSTGRES_USER=pgsql
+      - POSTGRES_PASSWORD=12345678
+    volumes:
+      - './data:/var/lib/postgresql/data'
+      - './dumps:/dumps'
+    ports:
+      - "5432:5432"
+
+  
+  # pgAdmin 4 container
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin-1
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: adminpassword
+    ports:
+      - "8080:80"
+
+  # redis container
+  redis:
+    image: redis:latest
+    container_name: redis-4
+    ports:
+      - "6379:6379"
